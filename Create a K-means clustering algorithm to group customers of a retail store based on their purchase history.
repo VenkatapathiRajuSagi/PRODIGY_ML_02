@@ -1,0 +1,27 @@
+import pandas as pd
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+# Load the data
+data = pd.read_csv('customer_purchase_data.csv')
+
+# Feature engineering and normalization
+features = data[['total_spending', 'average_order_value', 'purchase_frequency']]
+scaler = StandardScaler()
+scaled_features = scaler.fit_transform(features)
+
+# Choose the number of clusters
+kmeans = KMeans(n_clusters=3, random_state=42)
+
+# Fit the K-means model
+kmeans.fit(scaled_features)
+
+# Assign labels to customers
+labels = kmeans.labels_
+
+# Analyze the clusters
+cluster_0 = data[labels == 0]
+cluster_1 = data[labels == 1]
+cluster_2 = data[labels == 2]
+
+# ... (Analyze the characteristics of each cluster)
